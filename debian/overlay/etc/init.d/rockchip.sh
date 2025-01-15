@@ -134,7 +134,7 @@ then
     then
        rm /dev/rfkill
     fi
-
+    dpkg -i --force-overwrite /camera_engine_rkisp_v2.3.0_arm64.deb
     rm -rf /*.deb
     rm -rf /*.tar
 

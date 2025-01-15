@@ -76,7 +76,6 @@ Build
 # Building cache
 #
 /build
-/mpp/version.h
 
 #
 # Debian

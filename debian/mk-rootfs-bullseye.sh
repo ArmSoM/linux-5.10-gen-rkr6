@@ -66,6 +66,11 @@ echo "deb-src http://mirrors.ustc.edu.cn/debian/ bullseye-backports main contrib
 apt-get update
 apt-get upgrade -y
 
+sudo passwd root <<IEOF
+root
+root
+IEOF
+
 export APT_INSTALL="apt-get install -fy --allow-downgrades"
 
 # enter root username without password
@@ -96,6 +101,10 @@ echo -e "\033[36m Install camera.................... \033[0m"
 \${APT_INSTALL} cheese v4l-utils
 \${APT_INSTALL} /packages/libv4l/*.deb
 \${APT_INSTALL} /packages/cheese/*.deb
+
+#---------armsom-sige7-test---------
+echo -e "\033[36m Install armsom-sige7-test.................... \033[0m"
+\${APT_INSTALL} /packages/armsom-sige7-test/*.deb
 
 #---------Xserver---------
 echo -e "\033[36m Install Xserver.................... \033[0m"
@@ -156,20 +165,20 @@ echo -e "\033[36m Install rktoolkit.................... \033[0m"
 # echo -e "\033[36m Install gl4es.................... \033[0m"
 # \${APT_INSTALL} /packages/gl4es/*.deb
 
-echo -e "\033[36m Install Chinese fonts.................... \033[0m"
-# Uncomment zh_CN.UTF-8 for inclusion in generation
-sed -i 's/^# *\(zh_CN.UTF-8\)/\1/' /etc/locale.gen
-echo "LANG=zh_CN.UTF-8" >> /etc/default/locale
+# echo -e "\033[36m Install Chinese fonts.................... \033[0m"
+# # Uncomment zh_CN.UTF-8 for inclusion in generation
+# sed -i 's/^# *\(zh_CN.UTF-8\)/\1/' /etc/locale.gen
+# echo "LANG=zh_CN.UTF-8" >> /etc/default/locale
 
-# Generate locale
-locale-gen
+# # Generate locale
+# locale-gen
 
-# Export env vars
-echo "export LC_ALL=zh_CN.UTF-8" >> ~/.bashrc
-echo "export LANG=zh_CN.UTF-8" >> ~/.bashrc
-echo "export LANGUAGE=zh_CN.UTF-8" >> ~/.bashrc
+# # Export env vars
+# echo "export LC_ALL=zh_CN.UTF-8" >> ~/.bashrc
+# echo "export LANG=zh_CN.UTF-8" >> ~/.bashrc
+# echo "export LANGUAGE=zh_CN.UTF-8" >> ~/.bashrc
 
-source ~/.bashrc
+# source ~/.bashrc
 
 \${APT_INSTALL} ttf-wqy-zenhei fonts-aenigma
 \${APT_INSTALL} xfonts-intl-chinese
@@ -199,6 +208,7 @@ apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark hold
 #---------------Custom Script--------------
 systemctl mask systemd-networkd-wait-online.service
 systemctl mask NetworkManager-wait-online.service
+systemctl enable systemd-resolved
 rm /lib/systemd/system/wpa_supplicant@.service
 
 #------remove unused packages------------
