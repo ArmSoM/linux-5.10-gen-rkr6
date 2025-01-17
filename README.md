@@ -74,9 +74,18 @@ autoreconf -f -i
 make make -j8
 install -m 0755 make /usr/local/bin/make
 ```
+### 2.6、debian 环境
 
+解决 mv:cannot stat'chroot.files': No such file or directory 问题
 
-### 2.6、git配置
+```
+cd debian
+sudo apt-get install binfmt-support qemu-user-static
+sudo dpkg -i ubuntu-build-service/packages/*
+sudo apt-get install -f
+```
+
+### 2.7、git配置
 
 在~/linux-5.10-gen-rkr6目录下
 ```
